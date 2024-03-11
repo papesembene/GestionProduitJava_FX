@@ -1,21 +1,30 @@
 package com.example.gestionproduit;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 
-public class HelloController {
+public class Register {
+
     @FXML
-    private PasswordField mdpInput;
+    private PasswordField mdp1Input;
+
+    @FXML
+    private PasswordField mdp2Input;
 
     @FXML
     private TextField userInput;
 
     @FXML
-    void btnLogin(ActionEvent event) {
+    void btn_inscription(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_login(ActionEvent event) {
 
     }
 
 }
+
