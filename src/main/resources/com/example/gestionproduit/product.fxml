@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.gestionproduit.ProductController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="564.0" prefWidth="713.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.ProductController">
+   <children>
+      <TextField fx:id="nameInput" layoutX="98.0" layoutY="89.0" prefHeight="25.0" prefWidth="205.0" promptText="Name" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+      <TextField fx:id="priceInput" layoutX="373.0" layoutY="89.0" prefHeight="25.0" prefWidth="205.0" promptText="Price" style="-fx-background-color: tranparent; -fx-border-color: #0598ff; -fx-border-width: 0px  0px 2px 0px;" />
+      <TextField fx:id="qteInput" layoutX="97.0" layoutY="169.0" prefHeight="25.0" prefWidth="205.0" promptText="Quantity" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+      <Label layoutX="98.0" layoutY="68.0" />
+      <ComboBox fx:id="categoryCombo" layoutX="365.0" layoutY="169.0" prefHeight="25.0" prefWidth="212.0" promptText="Choose Category" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+      <Button layoutX="104.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-radius: 10px; -fx-border-color: #0598ff;" text="Ajouter" textFill="#0598ff" />
+      <TableView fx:id="productTable" layoutX="81.0" layoutY="295.0" prefHeight="255.0" prefWidth="504.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+        <columns>
+          <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="colName" prefWidth="98.0" text="Name" />
+            <TableColumn fx:id="colQte" prefWidth="78.0" text="Quantity" />
+            <TableColumn fx:id="colPrice" prefWidth="116.0" text="Price" />
+            <TableColumn fx:id="colCategory" prefWidth="135.0" text="Category" />
+        </columns>
+      </TableView>
+      <Button layoutX="261.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnDelete" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 10px;" text="Supprimer" textFill="#720d0d" />
+      <Button layoutX="420.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-color: #e49a06;" text="Modifier" textFill="#e49a06" />
+      <Pane layoutX="-2.0" layoutY="-2.0" opacity="0.1" prefHeight="81.0" prefWidth="752.0" style="-fx-background-color: #0598ff;" />
+      <Text fill="#0598ff" layoutX="43.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion Product" textAlignment="CENTER" wrappingWidth="224.8837890625">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Text>
+      <TextField fx:id="nameInput1" layoutX="524.0" layoutY="30.0" onAction="#searchInput" prefHeight="27.0" prefWidth="145.0" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-width: 2px 2px 2px 2px; -fx-border-radius: 10px;" />
+   </children>
 </AnchorPane>
