@@ -49,8 +49,8 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Product(int id, int category_id, String name, int price, int quantity) {
-        this.id = id;
+    public Product( int category_id, String name, int price, int quantity) {
+
         this.category_id = category_id;
         this.name = name;
         this.price = price;
