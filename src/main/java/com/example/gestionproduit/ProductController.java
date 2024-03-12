@@ -32,7 +32,7 @@ public class ProductController {
     private TextField nameInput;
 
     @FXML
-    private TextField nameInput1;
+    private TextField searchInput;
 
     @FXML
     private TextField priceInput;
