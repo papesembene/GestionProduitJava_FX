@@ -19,8 +19,8 @@
       <TextField fx:id="qteInput" layoutX="97.0" layoutY="169.0" prefHeight="25.0" prefWidth="205.0" promptText="Quantity" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
       <Label layoutX="98.0" layoutY="68.0" />
       <ComboBox fx:id="categoryCombo" layoutX="365.0" layoutY="169.0" prefHeight="25.0" prefWidth="212.0" promptText="Choose Category" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-      <Button layoutX="104.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-radius: 10px; -fx-border-color: #0598ff;" text="Ajouter" textFill="#0598ff" />
-      <TableView fx:id="productTable" layoutX="49.0" layoutY="295.0" prefHeight="255.0" prefWidth="596.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+      <Button layoutX="281.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-radius: 10px; -fx-border-color: #0598ff;" text="Ajouter" textFill="#0598ff" />
+      <TableView fx:id="productTable" layoutX="49.0" layoutY="295.0" prefHeight="220.0" prefWidth="596.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
         <columns>
           <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
           <TableColumn fx:id="colName" prefWidth="98.0" text="Name" />
@@ -29,8 +29,8 @@
             <TableColumn fx:id="colCategory" prefWidth="180.0" text="Category" />
         </columns>
       </TableView>
-      <Button layoutX="261.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnDelete" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 10px;" text="Supprimer" textFill="#720d0d" />
-      <Button layoutX="420.0" layoutY="235.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-color: #e49a06;" text="Modifier" textFill="#e49a06" />
+      <Button layoutX="139.0" layoutY="523.0" mnemonicParsing="false" onAction="#btnDelete" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 10px;" text="Supprimer" textFill="#720d0d" />
+      <Button layoutX="365.0" layoutY="523.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-color: #e49a06;" text="Modifier" textFill="#e49a06" />
       <Pane layoutX="-2.0" layoutY="-2.0" opacity="0.1" prefHeight="81.0" prefWidth="752.0" style="-fx-background-color: #0598ff;" />
       <Text fill="#0598ff" layoutX="43.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion Product" textAlignment="CENTER" wrappingWidth="224.8837890625">
          <font>
