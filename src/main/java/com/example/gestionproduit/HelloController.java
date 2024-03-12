@@ -27,7 +27,7 @@ public class HelloController {
 
     @FXML
     void bntInscrire(ActionEvent event) throws IOException {
-        Parent signin = FXMLLoader.load(getClass().getResource("/com/example/gestionprojet/register.fxml"));
+        Parent signin = FXMLLoader.load(getClass().getResource("register.fxml"));
         Scene scene = new Scene(signin);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
