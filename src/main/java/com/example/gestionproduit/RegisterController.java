@@ -49,7 +49,7 @@ public class RegisterController {
         if (login.equals("") || mdp.equals("") || mdp1.equals("") || phoneInput.equals("")|| nameInput.equals("") || emailInput.equals("")) {
             System.out.println("Veuillez remplir tous les champs");
         } else {
-            String sql="insert into user(name,telephone,email,login,password) values(?,?,?,?,?)";
+            String sql="insert into utilisateur(name,telephone,email,login,password) values(?,?,?,?,?)";
             try{
                 PreparedStatement statement=new Db().getConnection().prepareStatement(sql);
                 statement.setString(1,nameInput.getText());
@@ -58,6 +58,9 @@ public class RegisterController {
                 statement.setString(4,userInput.getText());
                 statement.setString(5,mdp1Input.getText());
                 statement.execute();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
                 //Navigation vers la page login
                 FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
@@ -65,19 +68,12 @@ public class RegisterController {
                 stage.setTitle("Login");
                 stage.setScene(scene);
                 stage.show();
-
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            nameInput.setText("");
-            phoneInput.setText("");
-            userInput.setText("");
-            mdp1Input.setText("");
-            mdp2Input.setText("");
-            emailInput.setText("");
-
-
-
+                nameInput.setText("");
+                phoneInput.setText("");
+                userInput.setText("");
+                mdp1Input.setText("");
+                mdp2Input.setText("");
+                emailInput.setText("");
         }
         }
 

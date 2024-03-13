@@ -17,7 +17,7 @@ public class Db {
     public Connection getConnection() {
         try {
             Class.forName("org.postgresql.Driver");
-            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/gestion_vehicules", "postgres", "passer");
+            this.conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/gestion_produits_fx", "postgres", "passer");
             //System.out.println("Connection a la base reussi ");
         } catch (Exception var2) {
             this.conn = null;

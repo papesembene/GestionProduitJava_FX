@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainpageController {
 
@@ -40,7 +41,7 @@ public class MainpageController {
 
     @FXML
     void productpage(ActionEvent event) throws IOException {
-        Parent fxml = FXMLLoader.load(getClass().getResource("product.fxml"));
+        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("product.fxml")));
         contentpage.getChildren().removeAll();
         contentpage.getChildren().setAll(fxml);
     }

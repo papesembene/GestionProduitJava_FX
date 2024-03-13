@@ -17,13 +17,12 @@ public class UserRepository {
         this.connection = new Db().getConnection();
         User user = new User();
         try {
-            String sql = "SELECT * FROM user WHERE login = ? AND password = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "SELECT * FROM utilisateur WHERE login = ? AND password = ?";
+            PreparedStatement statement = this.connection.prepareStatement(sql);
             statement.setString(1, login);
             statement.setString(2, mdp);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                user = new User();
                 user.setId(rs.getInt(1));
                 user.setLogin(rs.getString(2));
                 user.setPassword(rs.getString(3));

@@ -28,10 +28,10 @@ public class HelloController  implements Initializable {
     @FXML
     private String name;
 
-    private final UserRepository userRepository= new UserRepository();
 
     @FXML
     void btnLogin(ActionEvent event)  throws IOException {
+        UserRepository userRepository= new UserRepository();
         String login = userInput.getText();
         String mdp = mdpInput.getText();
         if (login.equals("") || mdp.equals("")) {
@@ -43,7 +43,7 @@ public class HelloController  implements Initializable {
             alert.showAndWait();
         } else {
             User user = userRepository.getUser(login, mdp);
-            if (userRepository != null) {
+            if (userRepository != null ) {
                 name = "BONJOUR" + (user.getName());
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Connexion reuissi");

@@ -11,12 +11,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CategoryRepository {
+    Connection connection;
+    Db db = new Db();
+
     public ObservableList<Category> getAllCategorie() {
-       Connection connection = new Db().getConnection();
+       Connection connection = db.getConnection();
         ObservableList<Category> list = null;
         try {
             list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM categorie ";
+            String sql = "SELECT *  FROM category ";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {

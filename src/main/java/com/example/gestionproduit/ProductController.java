@@ -18,11 +18,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
-
+    Db db;
+    Connection connection =null;
     @FXML
     private ComboBox<Category> categoryCombo;
 
@@ -55,7 +57,18 @@ public class ProductController implements Initializable {
 
     @FXML
     private TextField qteInput;
-    Connection connection;
+
+    private int getIdCategorie(String name) throws SQLException {
+        String sql = "select id from category where name = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, name);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            return resultSet.getInt("id");
+        } else {
+            throw new IllegalArgumentException("Catégorie introuvable : " + name);
+        }
+    }
 
     @FXML
     void btnAdd(ActionEvent event) {
@@ -65,7 +78,7 @@ public class ProductController implements Initializable {
             statement.setString(1,nameInput.getText());
             statement.setInt(2, Integer.parseInt(priceInput.getText()));
             statement.setInt(3, Integer.parseInt(qteInput.getText()));
-            statement.setInt(4, Integer.parseInt(String.valueOf(categoryCombo.getValue())));
+            statement.setInt(4, getIdCategorie(categoryCombo.getValue().getName()));
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -83,8 +96,8 @@ public class ProductController implements Initializable {
             list = prod.getAllproducts();
             colId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-            colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+            colQte.setCellValueFactory(new PropertyValueFactory<>("price"));
+            colPrice.setCellValueFactory(new PropertyValueFactory<>("quantity"));
             colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
             productTable.setItems(list);
 
@@ -120,8 +133,9 @@ public class ProductController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        connection=new Db().getConnection();
+        db = new Db();
+        connection = db.getConnection();
+        //connection=new Db().getConnection();
         affiche();
         CategoryRepository categorieRepository=new CategoryRepository();
         ObservableList<Category> categorie = categorieRepository.getAllCategorie();

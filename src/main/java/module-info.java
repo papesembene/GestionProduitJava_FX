@@ -6,6 +6,7 @@ module com.example.gestionproduit {
 
     opens com.example.gestionproduit to javafx.fxml;
     exports com.example.gestionproduit;
+    exports com.example.gestionproduit.model;
     exports com.example.gestionproduit.Repository;
     opens com.example.gestionproduit.Repository to javafx.fxml;
 }

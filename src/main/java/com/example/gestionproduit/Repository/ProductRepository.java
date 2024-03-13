@@ -3,6 +3,7 @@ package com.example.gestionproduit.Repository;
 import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.Product;
 import com.example.gestionproduit.model.User;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class ProductRepository {
     private Connection connection;
+    Db db = new Db();
 
     public ProductRepository() {
         this.connection = new Db().getConnection();
@@ -37,9 +39,10 @@ public class ProductRepository {
 
     }*/
    public ObservableList<Product> getAllproducts(){
-       this.connection = new Db().getConnection();
+       connection = db.getConnection();
        ObservableList<Product> list = null;
        try {
+           list = FXCollections.observableArrayList();
            String sql = "SELECT * FROM product  ";
            PreparedStatement statement = connection.prepareStatement(sql);
            ResultSet rs = statement.executeQuery();

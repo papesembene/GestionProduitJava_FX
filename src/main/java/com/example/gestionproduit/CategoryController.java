@@ -14,12 +14,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.w3c.dom.events.MouseEvent;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CategoryController implements Initializable {
-
+    Db db;
     @FXML
     private TableView<Category> categoryTable;
 
@@ -34,18 +35,18 @@ public class CategoryController implements Initializable {
 
     @FXML
     private TextField searchInput;
-
+    Connection connection;
     @FXML
     void btnAdd(ActionEvent event) {
-        String sql="insert into categorie(libelle) values(?)";
+        String sql="insert into category(name) values(?)";
         try {
-            PreparedStatement statement=new Db().getConnection().prepareStatement(sql);
+            PreparedStatement statement=connection.prepareStatement(sql);
             statement.setString(1,nameInput.getText());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        affiche();
+         this.affiche();
         nameInput.setText("");
     }
 
@@ -56,10 +57,11 @@ public class CategoryController implements Initializable {
 
     @FXML
     void btnDelete(ActionEvent event) {
-        String sql="delete from categorie where id=?";
+        int id=this.categoryTable.getSelectionModel().getSelectedItem().getId();
+        String sql="delete from category where id=?";
         try {
-            PreparedStatement statement=new Db().getConnection().prepareStatement(sql);
-            statement.setInt(1,1);
+            PreparedStatement statement=connection.prepareStatement(sql);
+            statement.setInt(1,id);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -74,11 +76,10 @@ public class CategoryController implements Initializable {
         }
     }*/
     public void affiche(){
-
         CategoryRepository categorieRepository = new CategoryRepository();
-        ObservableList<Category> list=categorieRepository.getAllCategorie();
+        ObservableList<Category> list = categorieRepository.getAllCategorie();
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colName.setCellValueFactory(new PropertyValueFactory<>("libelle"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         categoryTable.setItems(list);
     }
 
@@ -96,7 +97,8 @@ public class CategoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        new Db().getConnection();
+         db = new Db();
+        connection= db.getConnection();
         affiche();
     }
 }
