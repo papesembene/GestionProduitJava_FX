@@ -67,14 +67,15 @@ public class CategoryController implements Initializable {
         affiche();
     }
     @FXML
-    void charge(MouseEvent event) {
+    /*void charge(MouseEvent event) {
         Category categorie=(Category) categoryTable.getSelectionModel().getSelectedItem();
         if (event.getClickCount()==2){
             nameInput.setText(categorie.getName());
         }
-    }
+    }*/
     public void affiche(){
-        CategoryRepository categorieRepository=new CategoryRepository();
+
+        CategoryRepository categorieRepository = new CategoryRepository();
         ObservableList<Category> list=categorieRepository.getAllCategorie();
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("libelle"));
