@@ -6,27 +6,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="602.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.MainpageController">
    <children>
       <Pane layoutX="-7.0" layoutY="-3.0" prefHeight="610.0" prefWidth="204.0" style="-fx-background-color: #0598ff; -fx-border-color: tranparent;">
          <children>
-            <Button layoutX="-8.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: #0598ff;" text="Gestion Produits" textFill="WHITE">
+            <Button layoutX="-8.0" layoutY="95.0" mnemonicParsing="false" onAction="#productpage" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: #0598ff;" text="Gestion Produits" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button layoutY="138.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="198.0" style="-fx-background-color: #0598ff;" text="Gestion Categories" textFill="#eeeeee">
+            <Button layoutY="138.0" mnemonicParsing="false" onAction="#categorypage" prefHeight="33.0" prefWidth="198.0" style="-fx-background-color: #0598ff;" text="Gestion Categories" textFill="#eeeeee">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button layoutX="-49.0" layoutY="189.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="252.0" style="-fx-background-color: #0598ff;" text="Dashboard" textFill="WHITE">
+            <Button layoutX="-49.0" layoutY="189.0" mnemonicParsing="false" onAction="#dashboardpage" prefHeight="33.0" prefWidth="252.0" style="-fx-background-color: #0598ff;" text="Dashboard" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
             </Button>
-            <Button layoutX="-37.0" layoutY="237.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="240.0" style="-fx-background-color: #0598ff;" text="Extraire Docs" textFill="WHITE">
+            <Button layoutX="-37.0" layoutY="237.0" mnemonicParsing="false" onAction="#docspage" prefHeight="33.0" prefWidth="240.0" style="-fx-background-color: #0598ff;" text="Extraire Docs" textFill="WHITE">
                <font>
                   <Font size="15.0" />
                </font>
