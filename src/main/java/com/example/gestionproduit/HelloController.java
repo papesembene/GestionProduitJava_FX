@@ -21,8 +21,8 @@ public class HelloController  implements Initializable {
 
     @FXML
     private TextField userInput;
-    @FXML
-    private UserImp userdao= new UserImp();
+
+    private UserRepository userRepository= new UserRepository();
 
     @FXML
     void btnLogin(ActionEvent event)  throws IOException {
