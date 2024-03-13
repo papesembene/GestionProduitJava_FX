@@ -39,7 +39,7 @@ public class RegisterController {
     private TextField userInput;
     UserRepository UserRepository;
     @FXML
-    void btn_inscription(ActionEvent event) throws Exception {
+    void btn_inscription(ActionEvent event) throws IOException {
         String login = userInput.getText();
         String mdp = mdp1Input.getText();
         String mdp1 = mdp2Input.getText();
