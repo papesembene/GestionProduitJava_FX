@@ -1,4 +1,4 @@
-package com.example.gestionproduit;
+package com.example.gestionproduit.Repository;
 
 import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.User;
@@ -10,14 +10,12 @@ import java.sql.SQLException;
 
 public class UserRepository {
     private Connection connection;
-
     public UserRepository() {
         this.connection = new Db().getConnection();
     }
-
     public User getUser(String login, String mdp) {
         this.connection = new Db().getConnection();
-        User user = null;
+        User user = new User();
         try {
             String sql = "SELECT * FROM user WHERE login = ? AND password = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
