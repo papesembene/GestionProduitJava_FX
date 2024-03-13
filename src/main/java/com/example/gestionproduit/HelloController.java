@@ -2,9 +2,11 @@ package com.example.gestionproduit;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.fxml.FXML;
@@ -13,16 +15,24 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class HelloController {
+public class HelloController  implements Initializable {
     @FXML
     private PasswordField mdpInput;
 
     @FXML
     private TextField userInput;
+    @FXML
+    private UserImp userdao= new UserImp();
 
     @FXML
-    void btnLogin(ActionEvent event) {
+    void btnLogin(ActionEvent event)  throws IOException {
+        String login = userInput.getText();
+        String mdp = mdpInput.getText();
+        if (login.equals("") || mdp.equals("")){
+            System.out.println("Veuillez remplir tous les champs");
+        }else{
 
+        }
     }
 
     @FXML
