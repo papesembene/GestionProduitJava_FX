@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.RegisterController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="742.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.RegisterController">
    <left>
       <AnchorPane prefHeight="400.0" prefWidth="261.0" style="-fx-background-color: #0598ff;" BorderPane.alignment="CENTER">
          <children>
@@ -32,18 +32,21 @@
       </AnchorPane>
    </left>
    <right>
-      <AnchorPane prefHeight="400.0" prefWidth="345.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="583.0" prefWidth="483.0" BorderPane.alignment="CENTER">
          <children>
-            <TextField fx:id="userInput" layoutX="52.0" layoutY="147.0" prefHeight="27.0" prefWidth="203.0" promptText="User Name" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="mdp1Input" layoutX="53.0" layoutY="200.0" prefHeight="27.0" prefWidth="205.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField fx:id="mdp2Input" layoutX="49.0" layoutY="249.0" prefHeight="27.0" prefWidth="209.0" promptText="Confirm Password" style="-fx-background-color: tranparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button layoutX="93.0" layoutY="303.0" mnemonicParsing="false" onAction="#btn_inscription" prefHeight="27.0" prefWidth="104.0" style="-fx-background-color: #0598ff;" text="Inscription" textFill="WHITE" />
-            <Hyperlink layoutX="128.0" layoutY="357.0" onAction="#btn_login" text="avez-vous deja un compte ?" />
-            <Text fill="#0598ff" layoutX="65.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" textAlignment="CENTER" wrappingWidth="160.71875">
+            <TextField fx:id="emailInput" layoutX="100.0" layoutY="131.0" prefHeight="27.0" prefWidth="203.0" promptText="Email" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="mdp1Input" layoutX="99.0" layoutY="280.0" prefHeight="27.0" prefWidth="205.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField fx:id="mdp2Input" layoutX="97.0" layoutY="327.0" prefHeight="27.0" prefWidth="209.0" promptText="Confirm Password" style="-fx-background-color: tranparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+            <Button layoutX="86.0" layoutY="388.0" mnemonicParsing="false" onAction="#btn_inscription" prefHeight="27.0" prefWidth="104.0" style="-fx-background-color: #0598ff;" text="Inscription" textFill="WHITE" />
+            <Hyperlink layoutX="148.0" layoutY="470.0" onAction="#btn_login" text="avez-vous deja un compte ?" />
+            <Text fill="#0598ff" layoutX="65.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" textAlignment="CENTER" wrappingWidth="160.71875">
                <font>
                   <Font size="22.0" />
                </font>
             </Text>
+            <TextField fx:id="phoneInput" layoutX="98.0" layoutY="176.0" prefHeight="27.0" prefWidth="203.0" promptText="Phone" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="userInput" layoutX="100.0" layoutY="229.0" prefHeight="27.0" prefWidth="203.0" promptText="User Name" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="nameInput" layoutX="98.0" layoutY="93.0" prefHeight="27.0" prefWidth="203.0" promptText="Full Name" style="-fx-border-color: #0598ff; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
          </children>
       </AnchorPane>
    </right>

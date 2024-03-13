@@ -2,8 +2,8 @@ package com.example.gestionproduit.model;
 
 public class User {
     private int id;
-    private String f_name;
-    private String l_name;
+    private String name;
+
     private String email;
     private String password;
     private String phone;
@@ -17,21 +17,15 @@ public class User {
         this.id = id;
     }
 
-    public String getF_name() {
-        return f_name;
+    public String getName() {
+        return name;
     }
 
-    public void setF_name(String f_name) {
-        this.f_name = f_name;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getL_name() {
-        return l_name;
-    }
 
-    public void setL_name(String l_name) {
-        this.l_name = l_name;
-    }
 
     public String getEmail() {
         return email;
@@ -65,10 +59,10 @@ public class User {
         this.login = login;
     }
 
-    public User(String f_name, String l_name, String email, String password, String phone, String login) {
+    public User(String name,  String email, String password, String phone, String login) {
 
-        this.f_name = f_name;
-        this.l_name = l_name;
+        this.name = name;
+
         this.email = email;
         this.password = password;
         this.phone = phone;
@@ -82,8 +76,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", f_name='" + f_name + '\'' +
-                ", l_name='" + l_name + '\'' +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", phone='" + phone + '\'' +

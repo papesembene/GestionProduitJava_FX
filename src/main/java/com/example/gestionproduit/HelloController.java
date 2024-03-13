@@ -1,5 +1,6 @@
 package com.example.gestionproduit;
 import com.example.gestionproduit.Repository.UserRepository;
+import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.Product;
 import com.example.gestionproduit.model.User;
 import javafx.event.ActionEvent;
@@ -13,10 +14,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
 import java.util.List;
-
+import java.util.ResourceBundle;
 public class HelloController  implements Initializable {
     @FXML
     private PasswordField mdpInput;
@@ -32,20 +34,19 @@ public class HelloController  implements Initializable {
     void btnLogin(ActionEvent event)  throws IOException {
         String login = userInput.getText();
         String mdp = mdpInput.getText();
-
         if (login.equals("") || mdp.equals("")) {
             System.out.println("Veuillez remplir tous les champs");
         } else {
             User user = userRepository.getUser(login, mdp);
             if (userRepository != null) {
-                name = (user.getLogin());
+                name = "BONJOUR" + (user.getName());
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Connexion reuissi");
                 alert.setHeaderText(null);
                 alert.setContentText("Vous êtes maintenant connecté");
                 alert.showAndWait();
                 // Affichage de la liste des produits avec une quantité inférieure à cinq
-                List<Product> produits = produitDao.getProduitsQuantiteInferieure(5);
+               /* List<Product> produits = produitDao.getProduitsQuantiteInferieure(5);
                 if (!produits.isEmpty()) {
                     StringBuilder message = new StringBuilder("Liste des produits avec une quantité inférieure à cinq :\n");
                     for (Product produit : produits) {
@@ -55,15 +56,20 @@ public class HelloController  implements Initializable {
                     alertListeProduits.setTitle("Produits avec quantité inférieure à cinq");
                     alertListeProduits.setHeaderText(null);
                     alertListeProduits.setContentText(message.toString());
-                    alertListeProduits.showAndWait();
-
+                    alertListeProduits.showAndWait();*/
                     FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("mainpage.fxml"));
                     Scene scene = new Scene(fxmlLoader.load());
                     Stage stage = new Stage();
                     stage.setTitle("Accueil");
                     stage.setScene(scene);
                     stage.show();
-            }
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setTitle("Erreur");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Login ou mot de pass incorrect");
+                        alert.showAndWait();
+                    }
         }
     }
 
@@ -76,8 +82,11 @@ public class HelloController  implements Initializable {
         stage.show();
     }
 
+    
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        Connection connection = new Db().getConnection();
     }
 }
