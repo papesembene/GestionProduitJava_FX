@@ -35,7 +35,12 @@ public class HelloController  implements Initializable {
         String login = userInput.getText();
         String mdp = mdpInput.getText();
         if (login.equals("") || mdp.equals("")) {
-            System.out.println("Veuillez remplir tous les champs");
+           // System.out.println("Veuillez remplir tous les champs");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("ALERT");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez remplir tous les champs");
+            alert.showAndWait();
         } else {
             User user = userRepository.getUser(login, mdp);
             if (userRepository != null) {
