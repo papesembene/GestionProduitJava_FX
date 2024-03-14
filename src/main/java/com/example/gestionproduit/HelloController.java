@@ -1,4 +1,5 @@
 package com.example.gestionproduit;
+import com.example.gestionproduit.Repository.ProductRepository;
 import com.example.gestionproduit.Repository.UserRepository;
 import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.Product;
@@ -25,56 +26,60 @@ public class HelloController  implements Initializable {
 
     @FXML
     private TextField userInput;
-    @FXML
-    private String name;
+
+    public static String name;
 
 
     @FXML
-    void btnLogin(ActionEvent event)  throws IOException {
-        UserRepository userRepository= new UserRepository();
+    void btnLogin(ActionEvent event) throws IOException
+    {
+        UserRepository userRepository = new UserRepository();
         String login = userInput.getText();
         String mdp = mdpInput.getText();
-        if (login.equals("") || mdp.equals("")) {
-           // System.out.println("Veuillez remplir tous les champs");
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ALERT");
-            alert.setHeaderText(null);
-            alert.setContentText("Veuillez remplir tous les champs");
-            alert.showAndWait();
-        } else {
-            User user = userRepository.getUser(login, mdp);
-            if (userRepository != null ) {
-                name = "BONJOUR" + (user.getName());
+            if (login.equals("") || mdp.equals(""))
+            {
+                // System.out.println("Veuillez remplir tous les champs");
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Connexion reuissi");
+                alert.setTitle("ALERT");
                 alert.setHeaderText(null);
-                alert.setContentText("Vous êtes maintenant connecté");
+                alert.setContentText("Veuillez remplir tous les champs");
                 alert.showAndWait();
-                // Affichage de la liste des produits avec une quantité inférieure à cinq
-               /* List<Product> produits = produitDao.getProduitsQuantiteInferieure(5);
-                if (!produits.isEmpty()) {
-                    StringBuilder message = new StringBuilder("Liste des produits avec une quantité inférieure à cinq :\n");
-                    for (Product produit : produits) {
-                        message.append(produit.getNom()).append(": ").append(produit.getQuantite()).append("\n");
-                    }
-                    Alert alertListeProduits = new Alert(Alert.AlertType.INFORMATION);
-                    alertListeProduits.setTitle("Produits avec quantité inférieure à cinq");
-                    alertListeProduits.setHeaderText(null);
-                    alertListeProduits.setContentText(message.toString());
-                    alertListeProduits.showAndWait();*/
-                    FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("mainpage.fxml"));
-                    Scene scene = new Scene(fxmlLoader.load());
-                    Stage stage = new Stage();
-                    stage.setTitle("Accueil");
-                    stage.setScene(scene);
-                    stage.show();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                        alert.setTitle("Erreur");
+            }
+            else
+            {
+                User user = userRepository.getUser(login, mdp);
+                    if (userRepository != null)
+                    {
+                        name = "Bienvenue cher (e) " + " " + (user.getLogin());
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("Connexion reuissi");
                         alert.setHeaderText(null);
-                        alert.setContentText("Login ou mot de pass incorrect");
+                        alert.setContentText("Vous êtes maintenant connecté");
+                        alert.showAndWait();
+                        // Affichage de la liste des produits avec une quantité inférieure à cinq
+                        ProductRepository prod = new ProductRepository();
+                        List<Product> produits = prod.getProduitsQuantiteInferieure();
+                        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("mainpage.fxml"));
+                        Scene scene = new Scene(fxmlLoader.load());
+                        Stage stage = new Stage();
+                        stage.setTitle("Accueil");
+                        stage.setScene(scene);
+                        stage.show();
+                        alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("quantity more less 5");
+                        alert.setHeaderText(null);
+                        alert.setContentText(produits.toString());
                         alert.showAndWait();
                     }
+                    else
+                    {
+                        Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                        alert1.setTitle("Erreur");
+                        alert1.setHeaderText(null);
+                        alert1.setContentText("Login ou mot de pass incorrect");
+                        alert1.showAndWait();
+                   }
+
         }
     }
 
@@ -87,11 +92,10 @@ public class HelloController  implements Initializable {
         stage.show();
     }
 
-    
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Connection connection = new Db().getConnection();
     }
+
 }

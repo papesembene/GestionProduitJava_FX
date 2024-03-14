@@ -9,11 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -29,7 +27,7 @@ public class ProductController implements Initializable {
     private ComboBox<Category> categoryCombo;
 
     @FXML
-    private TableColumn<Product, Integer> colCategory;
+    private TableColumn<Product, String> colCategory;
 
     @FXML
     private TableColumn<Product, Integer> colId;
@@ -57,11 +55,19 @@ public class ProductController implements Initializable {
 
     @FXML
     private TextField qteInput;
+    @FXML
+    private Button btnadd;
+
+    @FXML
+    private Button btndelete;
+
+    @FXML
+    private Button btnedit;
 
     private int getIdCategorie(String name) throws SQLException {
         String sql = "select id from category where name = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, name);
+        statement.setString(1, String.valueOf(name));
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             return resultSet.getInt("id");
@@ -98,6 +104,7 @@ public class ProductController implements Initializable {
             colName.setCellValueFactory(new PropertyValueFactory<>("name"));
             colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
             colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+            //String namecategory = String.valueOf(categoryCombo.getValue());
             colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
             productTable.setItems(list);
     }
@@ -117,6 +124,21 @@ public class ProductController implements Initializable {
         affiche();
 
     }
+    @FXML
+    void charger(MouseEvent event) throws SQLException {
+        Product prod =(Product) productTable.getSelectionModel().getSelectedItem();
+        if (event.getClickCount()==2){
+            btnadd.setDisable(true);
+            btndelete.setDisable(true);
+            priceInput.setText(String.valueOf(prod.getPrice()));
+            nameInput.setText(prod.getName());
+            qteInput.setText(String.valueOf(prod.getQuantity()));
+            CategoryRepository categorieRepository=new CategoryRepository();
+            int id = categoryCombo.getValue().getId();
+            ObservableList<Category> categorie = categorieRepository.getAllCategorie();
+            categoryCombo.setItems(categorie);
+        }
+    }
 
 
     @FXML
@@ -129,6 +151,7 @@ public class ProductController implements Initializable {
             statement.setInt(2, Integer.parseInt(priceInput.getText()));
             statement.setInt(3, Integer.parseInt(qteInput.getText()));
             statement.setInt(4, categoryCombo.getValue().getId());
+            //statement.setInt(4, categoryCombo.getValue().getId());
             statement.setInt(5, id);
             statement.executeUpdate();
 
@@ -137,6 +160,12 @@ public class ProductController implements Initializable {
             throw new RuntimeException(e);
         }
         affiche();
+        btnadd.setDisable(false);
+        btndelete.setDisable(false);
+        nameInput.setText("");
+        priceInput.setText("");
+        qteInput.setText("");
+        categoryCombo.setItems(null);
     }
 
     @FXML

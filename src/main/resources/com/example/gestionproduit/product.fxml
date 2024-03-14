@@ -11,32 +11,31 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="564.0" prefWidth="713.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.ProductController">
+<AnchorPane prefHeight="610.0" prefWidth="700.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.ProductController">
    <children>
-      <TextField fx:id="nameInput" layoutX="98.0" layoutY="89.0" prefHeight="25.0" prefWidth="205.0" promptText="Name" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+      <TextField fx:id="nameInput" layoutX="67.0" layoutY="89.0" prefHeight="25.0" prefWidth="205.0" promptText="Name" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
       <TextField fx:id="priceInput" layoutX="373.0" layoutY="89.0" prefHeight="25.0" prefWidth="205.0" promptText="Price" style="-fx-background-color: tranparent; -fx-border-color: #0598ff; -fx-border-width: 0px  0px 2px 0px;" />
-      <TextField fx:id="qteInput" layoutX="97.0" layoutY="169.0" prefHeight="25.0" prefWidth="205.0" promptText="Quantity" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
+      <TextField fx:id="qteInput" layoutX="67.0" layoutY="175.0" prefHeight="25.0" prefWidth="205.0" promptText="Quantity" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
       <Label layoutX="98.0" layoutY="68.0" />
       <ComboBox fx:id="categoryCombo" layoutX="365.0" layoutY="169.0" prefHeight="25.0" prefWidth="212.0" promptText="Choose Category" style="-fx-background-color: transparent; -fx-border-color: #0598ff; -fx-border-width: 0px 0px 2px 0px;" />
-      <Button layoutX="281.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-radius: 10px; -fx-border-color: #0598ff;" text="Ajouter" textFill="#0598ff" />
-      <TableView fx:id="productTable" layoutX="49.0" layoutY="295.0" prefHeight="220.0" prefWidth="596.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+      <Button fx:id="btnadd" layoutX="281.0" layoutY="240.0" mnemonicParsing="false" onAction="#btnAdd" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-radius: 10px; -fx-border-color: #0598ff;" text="Ajouter" textFill="#0598ff" />
+      <TableView fx:id="productTable" layoutX="67.0" layoutY="291.0" onMouseClicked="#charger" prefHeight="220.0" prefWidth="596.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
         <columns>
-          <TableColumn fx:id="colId" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="colId" prefWidth="75.0" text="id" visible="false" />
           <TableColumn fx:id="colName" prefWidth="98.0" text="Name" />
             <TableColumn fx:id="colQte" prefWidth="107.0" text="Quantity" />
             <TableColumn fx:id="colPrice" prefWidth="134.0" text="Price" />
-            <TableColumn fx:id="colCategory" prefWidth="180.0" text="Category" />
+            <TableColumn fx:id="colCategory" prefWidth="255.0" text="Category" />
         </columns>
       </TableView>
-      <Button layoutX="139.0" layoutY="523.0" mnemonicParsing="false" onAction="#btnDelete" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 10px;" text="Supprimer" textFill="#720d0d" />
-      <Button layoutX="365.0" layoutY="523.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-color: #e49a06;" text="Modifier" textFill="#e49a06" />
-      <Pane layoutX="-2.0" layoutY="-2.0" opacity="0.1" prefHeight="81.0" prefWidth="752.0" style="-fx-background-color: #0598ff;" />
-      <Text fill="#0598ff" layoutX="43.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion Product" textAlignment="CENTER" wrappingWidth="224.8837890625">
+      <Button fx:id="btndelete" layoutX="139.0" layoutY="523.0" mnemonicParsing="false" onAction="#btnDelete" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: white; -fx-border-color: red; -fx-border-radius: 10px;" text="Supprimer" textFill="#720d0d" />
+      <Button fx:id="btnedit" layoutX="365.0" layoutY="523.0" mnemonicParsing="false" onAction="#btnEdit" prefHeight="25.0" prefWidth="103.0" style="-fx-background-color: transparent; -fx-border-radius: 10px; -fx-border-color: #e49a06;" text="Modifier" textFill="#e49a06" />
+      <Pane layoutX="-2.0" layoutY="-2.0" opacity="0.1" style="-fx-background-color: #0598ff;" />
+      <Text fill="#0598ff" layoutX="43.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gestion Product" wrappingWidth="224.8837890625">
          <font>
             <Font size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="searchInput" layoutX="524.0" layoutY="30.0" onAction="#searchInput" prefHeight="27.0" prefWidth="145.0" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-width: 2px 2px 2px 2px; -fx-border-radius: 10px;" />
+      <TextField fx:id="searchInput" layoutX="518.0" layoutY="253.0" onAction="#searchInput" prefHeight="27.0" prefWidth="145.0" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-width: 2px 2px 2px 2px; -fx-border-radius: 10px;" />
    </children>
 </AnchorPane>

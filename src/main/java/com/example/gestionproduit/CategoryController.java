@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -36,6 +37,14 @@ public class CategoryController implements Initializable {
     @FXML
     private TextField searchInput;
     Connection connection;
+    @FXML
+    private Button btnadd;
+
+    @FXML
+    private Button btndelete;
+
+    @FXML
+    private Button btnupdate;
     @FXML
     void btnAdd(ActionEvent event) {
         String sql="insert into category(name) values(?)";
@@ -72,7 +81,9 @@ public class CategoryController implements Initializable {
     void charge(MouseEvent event) {
         Category categorie=(Category) categoryTable.getSelectionModel().getSelectedItem();
         if (event.getClickCount()==2){
-
+            btnadd.setDisable(true);
+            btndelete.setDisable(true);
+            nameInput.setText(categorie.getName());
         }
     }
     public void affiche(){
@@ -94,14 +105,14 @@ public class CategoryController implements Initializable {
             statement.setString(1, nameInput.getText());
             statement.setInt(2, id);
             statement.executeUpdate();
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         affiche();
+        btnadd.setDisable(false);
+        btndelete.setDisable(false);
+        nameInput.setText("");
     }
-
     @FXML
     void searchInput(ActionEvent event) {
 

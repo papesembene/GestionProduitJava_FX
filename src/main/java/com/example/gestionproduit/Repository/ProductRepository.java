@@ -4,6 +4,7 @@ import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.Product;
 import com.example.gestionproduit.model.User;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 
 import java.sql.Connection;
@@ -19,25 +20,28 @@ public class ProductRepository {
     public ProductRepository() {
         this.connection = new Db().getConnection();
     }
-   /* List<Product> getProduitsQuantiteInferieure(int qte){
-        this.connection = new Db().getConnection();
-        //User user = new User();
-        try {
-            String sql = "SELECT * FROM product WHERE quantity < ? ";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setId(rs.getInt(1));
-                user.setLogin(rs.getString(2));
-                user.setPassword(rs.getString(3));
+   public List<Product> getProduitsQuantiteInferieure() {
+       this.connection = new Db().getConnection();
+       ObservableList<Product> list = FXCollections.observableArrayList();
+       //list = null;
+       try {
+           String sql = "SELECT * FROM product WHERE quantity < 5 ";
+           PreparedStatement statement = connection.prepareStatement(sql);
+           ResultSet rs = statement.executeQuery();
+           if (rs.next()) {
+               Product product = new Product();
+               product.setId(rs.getInt(1));
+               product.setName(rs.getString(2));
+               product.setPrice(rs.getInt(3));
+               product.setQuantity(rs.getInt(4));
+               product.setCategory_id(rs.getInt(5));
+           }
+       } catch (SQLException e) {
+           throw new RuntimeException(e);
+       }
+       return list;
 
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-    }*/
+   }
    public ObservableList<Product> getAllproducts(){
        connection = db.getConnection();
        ObservableList<Product> list = null;

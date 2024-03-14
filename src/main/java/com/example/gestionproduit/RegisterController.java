@@ -83,10 +83,12 @@ public class RegisterController {
             @FXML
             void btn_login (ActionEvent event)  throws IOException {
                 Parent signin = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
-                Scene scene = new Scene(signin, 700, 500);
+                Scene scene = new Scene(signin);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                stage.setResizable(false);
                 stage.setScene(scene);
                 stage.show();
+
             }
 
 

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="602.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.MainpageController">
+<AnchorPane prefHeight="610.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gestionproduit.MainpageController">
    <children>
-      <Pane layoutX="-7.0" layoutY="-3.0" prefHeight="610.0" prefWidth="204.0" style="-fx-background-color: #0598ff; -fx-border-color: tranparent;">
+      <Pane layoutX="-7.0" layoutY="-3.0" prefHeight="610.0" prefWidth="252.0" style="-fx-background-color: #0598ff; -fx-border-color: tranparent;">
          <children>
             <Button layoutX="-8.0" layoutY="95.0" mnemonicParsing="false" onAction="#productpage" prefHeight="25.0" prefWidth="198.0" style="-fx-background-color: #0598ff;" text="Gestion Produits" textFill="WHITE">
                <font>
@@ -32,9 +32,13 @@
             </Button>
          </children>
       </Pane>
-      <Pane fx:id="contentpage" layoutX="197.0" layoutY="-4.0" prefHeight="610.0" prefWidth="529.0">
+      <Pane fx:id="contentpage" layoutX="244.0" layoutY="-4.0" prefHeight="610.0" prefWidth="448.0">
          <children>
-            <TextField fx:id="name" layoutX="141.0" layoutY="32.0" prefHeight="25.0" prefWidth="240.0" />
+            <Label fx:id="name" layoutX="69.0" layoutY="117.0" prefHeight="88.0" prefWidth="390.0" text="Label" textAlignment="CENTER" textFill="#0598ff">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
