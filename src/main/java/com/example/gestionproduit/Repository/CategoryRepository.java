@@ -41,7 +41,7 @@ public class CategoryRepository {
         ObservableList<Category> list = null;
         try {
             list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM category WHERE name LIKE ?";
+            String sql = "SELECT * FROM category WHERE lower(name) LIKE ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + mot + "%");
             ResultSet rs = statement.executeQuery();
