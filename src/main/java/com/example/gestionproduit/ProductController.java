@@ -96,16 +96,14 @@ public class ProductController implements Initializable {
             list = prod.getAllproducts();
             colId.setCellValueFactory(new PropertyValueFactory<>("id"));
             colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            colQte.setCellValueFactory(new PropertyValueFactory<>("price"));
-            colPrice.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+            colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+            colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
             colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
             productTable.setItems(list);
-
     }
 
     @FXML
     void btnDelete(ActionEvent event) {
-
         int id=this.productTable.getSelectionModel().getSelectedItem().getId();
         try {
             String sql=" DELETE FROM product WHERE id = ?";
@@ -123,7 +121,22 @@ public class ProductController implements Initializable {
 
     @FXML
     void btnEdit(ActionEvent event) {
+        int id = this.productTable.getSelectionModel().getSelectedItem().getId();
+        String sql = "UPDATE product SET name=? , price =?,quantity=? , category_id=? WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nameInput.getText());
+            statement.setInt(2, Integer.parseInt(priceInput.getText()));
+            statement.setInt(3, Integer.parseInt(qteInput.getText()));
+            statement.setInt(4, categoryCombo.getValue().getId());
+            statement.setInt(5, id);
+            statement.executeUpdate();
 
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        affiche();
     }
 
     @FXML

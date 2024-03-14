@@ -11,7 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.w3c.dom.events.MouseEvent;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -69,12 +69,12 @@ public class CategoryController implements Initializable {
         affiche();
     }
     @FXML
-    /*void charge(MouseEvent event) {
+    void charge(MouseEvent event) {
         Category categorie=(Category) categoryTable.getSelectionModel().getSelectedItem();
         if (event.getClickCount()==2){
-            nameInput.setText(categorie.getName());
+
         }
-    }*/
+    }
     public void affiche(){
         CategoryRepository categorieRepository = new CategoryRepository();
         ObservableList<Category> list = categorieRepository.getAllCategorie();
@@ -87,7 +87,19 @@ public class CategoryController implements Initializable {
 
     @FXML
     void btnEdit(ActionEvent event) {
+        int id = this.categoryTable.getSelectionModel().getSelectedItem().getId();
+        String sql = "UPDATE category SET name=? WHERE id=?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, nameInput.getText());
+            statement.setInt(2, id);
+            statement.executeUpdate();
 
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        affiche();
     }
 
     @FXML
