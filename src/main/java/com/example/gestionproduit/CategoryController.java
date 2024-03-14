@@ -1,8 +1,10 @@
 package com.example.gestionproduit;
 
 import com.example.gestionproduit.Repository.CategoryRepository;
+import com.example.gestionproduit.Repository.ProductRepository;
 import com.example.gestionproduit.model.Category;
 import com.example.gestionproduit.model.Db;
+import com.example.gestionproduit.model.Product;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -114,8 +117,12 @@ public class CategoryController implements Initializable {
         nameInput.setText("");
     }
     @FXML
-    void searchInput(ActionEvent event) {
-
+    void searchInput(KeyEvent event) {
+        CategoryRepository cat =new CategoryRepository();
+        ObservableList<Category> list = cat.search(searchInput.getText());
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        categoryTable.setItems(list);
     }
 
     @Override

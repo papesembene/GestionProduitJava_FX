@@ -34,4 +34,26 @@ public class CategoryRepository {
 
         return list;
     }
+    //pour rechercher un produit
+    public ObservableList<Category> search(String mot) {
+        connection = db.getConnection();
+        // List<Medecin> liste = null;
+        ObservableList<Category> list = null;
+        try {
+            list = FXCollections.observableArrayList();
+            String sql = "SELECT * FROM category WHERE name LIKE ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + mot + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Category cat = new Category();
+                cat.setId(rs.getInt(1));
+                cat.setName(rs.getString(2));
+                list.add(cat);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
 }
