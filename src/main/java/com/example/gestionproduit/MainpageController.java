@@ -39,8 +39,10 @@ public class MainpageController implements Initializable {
     }
 
     @FXML
-    void docspage(ActionEvent event) {
-
+    void docspage(ActionEvent event) throws IOException {
+        Parent fxml = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("documents.fxml")));
+        contentpage.getChildren().removeAll();
+        contentpage.getChildren().setAll(fxml);
     }
 
     @FXML

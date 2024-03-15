@@ -9,16 +9,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserRepository {
-    private Connection connection;
-    public UserRepository() {
-        this.connection = new Db().getConnection();
-    }
+     Connection connection ;
+    Db db ;
     public User getUser(String login, String mdp) {
-        this.connection = new Db().getConnection();
+
+        Db db = new Db();
+        connection = db.getConnection();
         User user = new User();
         try {
             String sql = "SELECT * FROM utilisateur WHERE login = ? AND password = ?";
-            PreparedStatement statement = this.connection.prepareStatement(sql);
+            PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, login);
             statement.setString(2, mdp);
             ResultSet rs = statement.executeQuery();

@@ -1,7 +1,10 @@
 package com.example.gestionproduit;
 
+import com.example.gestionproduit.model.Db;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import com.itextpdf.text.Document;
@@ -9,18 +12,18 @@ import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ResourceBundle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+public class DocumentsController implements Initializable {
 
-public class DocumentsController {
-
-    private Connection connection;
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
+     Connection connection = null;
 
     @FXML
     void btnexcel(ActionEvent event) {
@@ -29,7 +32,24 @@ public class DocumentsController {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM product");
             Workbook workbook = new XSSFWorkbook();
             Sheet sheet = workbook.createSheet("Product Data");
-            int rownum = 0;
+
+            // Créer une ligne pour les en-têtes
+            Row headerRow = sheet.createRow(0);
+            String[] headers = {"ID", "Name", "Quantity", "Price", "Category ID"};
+            CellStyle headerStyle = workbook.createCellStyle();
+            Font headerFont = workbook.createFont();
+            headerFont.setBold(true);
+            headerFont.setColor(IndexedColors.WHITE.getIndex());
+            headerStyle.setFont(headerFont);
+            headerStyle.setFillForegroundColor(IndexedColors.BLUE.getIndex());
+            headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+            for (int i = 0; i < headers.length; i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(headers[i]);
+                cell.setCellStyle(headerStyle);
+            }
+
+            int rownum = 1;
             while (resultSet.next()) {
                 Row row = sheet.createRow(rownum++);
                 row.createCell(0).setCellValue(resultSet.getInt("id"));
@@ -42,10 +62,14 @@ public class DocumentsController {
             workbook.write(fileOut);
             fileOut.close();
             workbook.close();
+
+            // Afficher un message de succès
+            showAlert("Exportation Excel réussie !");
         } catch (SQLException | IOException e) {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     void btnpdf(ActionEvent event) {
@@ -64,9 +88,23 @@ public class DocumentsController {
                 document.add(new Paragraph("\n"));
             }
             document.close();
+            showAlert("Exportation PDF réussie !");
         } catch (SQLException | IOException | com.itextpdf.text.DocumentException e) {
             e.printStackTrace();
         }
+    }
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Succès");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        Db db = new Db();
+        connection = db.getConnection();
     }
 }
 
