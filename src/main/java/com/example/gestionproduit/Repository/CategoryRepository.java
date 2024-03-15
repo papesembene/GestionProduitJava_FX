@@ -35,7 +35,7 @@ public class CategoryRepository {
         return list;
     }
     //pour rechercher un produit
-    public ObservableList<Category> search(String mot) {
+    public ObservableList<Category> search(String text) {
         connection = db.getConnection();
         // List<Medecin> liste = null;
         ObservableList<Category> list = null;
@@ -43,7 +43,7 @@ public class CategoryRepository {
             list = FXCollections.observableArrayList();
             String sql = "SELECT * FROM category WHERE lower(name) LIKE ?";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, "%" + mot + "%");
+            statement.setString(1, "%" + text + "%");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Category cat = new Category();

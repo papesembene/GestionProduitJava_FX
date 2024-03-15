@@ -1,5 +1,6 @@
 package com.example.gestionproduit.Repository;
 
+import com.example.gestionproduit.model.Category;
 import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.Product;
 import com.example.gestionproduit.model.User;
@@ -68,4 +69,30 @@ public class ProductRepository {
    }
 
 
+    public ObservableList<Product> search(String text) {
+        connection = db.getConnection();
+        ObservableList<Product> list = null;
+        try {
+            list = FXCollections.observableArrayList();
+            String sql = "SELECT * FROM product WHERE lower(name) LIKE ? OR quantity LIKE ? OR price LIKE ? OR category_id LIKE ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + text + "%");
+            statement.setString(2, "%" + Integer.parseInt(text)  + "%");
+            statement.setString(3, "%" + Integer.parseInt(text) + "%");
+            statement.setString(4, "%" + Integer.parseInt(text) + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Product prod = new Product();
+                prod.setId(rs.getInt(1));
+                prod.setName(rs.getString(2));
+                prod.setQuantity(Integer.parseInt(rs.getString(3)));
+                prod.setPrice(Integer.parseInt(rs.getString(4)));
+                prod.setCategory_id(Integer.parseInt(rs.getString(5)));
+                list.add(prod);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return list;
+    }
 }

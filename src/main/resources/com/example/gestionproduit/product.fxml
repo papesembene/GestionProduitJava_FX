@@ -36,6 +36,6 @@
             <Font size="22.0" />
          </font>
       </Text>
-      <TextField fx:id="searchInput" layoutX="518.0" layoutY="253.0" onAction="#searchInput" prefHeight="27.0" prefWidth="145.0" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-width: 2px 2px 2px 2px; -fx-border-radius: 10px;" />
+      <TextField fx:id="searchInput" layoutX="518.0" layoutY="253.0" onAction="#searchInput" onKeyTyped="#searchInput" prefHeight="27.0" prefWidth="145.0" promptText="Search" style="-fx-background-color: transparent; -fx-border-color: gray; -fx-border-width: 2px 2px 2px 2px; -fx-border-radius: 10px;" />
    </children>
 </AnchorPane>

@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -169,8 +170,15 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    void searchInput(ActionEvent event) {
-
+    void searchInput(KeyEvent event) {
+        ProductRepository prod =new ProductRepository();
+        ObservableList<Product> list = prod.search(searchInput.getText());
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        productTable.setItems(list);
     }
 
     @Override
