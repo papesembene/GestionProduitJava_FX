@@ -2,6 +2,8 @@ module com.example.gestionproduit {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires itextpdf;
+    requires org.apache.poi.ooxml;
 
 
     opens com.example.gestionproduit to javafx.fxml;
