@@ -71,28 +71,42 @@ public class ProductRepository {
 
     public ObservableList<Product> search(String text) {
         connection = db.getConnection();
-        ObservableList<Product> list = null;
+        ObservableList<Product> list = FXCollections.observableArrayList();
         try {
-            list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM product WHERE lower(name) LIKE ? OR quantity LIKE ? OR price LIKE ? OR category_id LIKE ?";
+            String sql = "SELECT * FROM product WHERE lower(name) LIKE ? OR quantity = ? OR price = ? OR category_id = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + text + "%");
-            statement.setString(2, "%" + Integer.parseInt(text)  + "%");
-            statement.setString(3, "%" + Integer.parseInt(text) + "%");
-            statement.setString(4, "%" + Integer.parseInt(text) + "%");
+            int searchTextAsInt = 0;
+            try {
+                searchTextAsInt = Integer.parseInt(text);
+            } catch (NumberFormatException e) {
+                // Ignore if text cannot be parsed as int
+            }
+            statement.setInt(2, searchTextAsInt);
+            statement.setInt(3, searchTextAsInt);
+            statement.setInt(4, searchTextAsInt);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Product prod = new Product();
                 prod.setId(rs.getInt(1));
                 prod.setName(rs.getString(2));
-                prod.setQuantity(Integer.parseInt(rs.getString(3)));
-                prod.setPrice(Integer.parseInt(rs.getString(4)));
-                prod.setCategory_id(Integer.parseInt(rs.getString(5)));
+                prod.setQuantity(rs.getInt(3));
+                prod.setPrice(rs.getInt(4));
+                prod.setCategory_id(rs.getInt(5));
                 list.add(prod);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return list;
     }
+
 }
