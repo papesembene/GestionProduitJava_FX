@@ -56,4 +56,22 @@ public class CategoryRepository {
         }
         return list;
     }
+    public Category getCategoryById(int id) {
+        Category category = null;
+        try {
+            connection = db.getConnection();
+            String sql = "SELECT * FROM category WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                category = new Category();
+                category.setId(rs.getInt("id"));
+                category.setName(rs.getString("name"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return category;
+    }
 }

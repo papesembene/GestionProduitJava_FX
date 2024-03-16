@@ -5,6 +5,8 @@ import com.example.gestionproduit.Repository.ProductRepository;
 import com.example.gestionproduit.model.Category;
 import com.example.gestionproduit.model.Db;
 import com.example.gestionproduit.model.Product;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -23,7 +26,7 @@ import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
     Db db;
-    Connection connection =null;
+    Connection connection = null;
     @FXML
     private ComboBox<Category> categoryCombo;
 
@@ -79,10 +82,10 @@ public class ProductController implements Initializable {
 
     @FXML
     void btnAdd(ActionEvent event) {
-        String sql="insert into product(name,price,quantity,category_id) values(?,?,?,?)";
+        String sql = "insert into product(name,price,quantity,category_id) values(?,?,?,?)";
         try {
-            PreparedStatement statement=new Db().getConnection().prepareStatement(sql);
-            statement.setString(1,nameInput.getText());
+            PreparedStatement statement = new Db().getConnection().prepareStatement(sql);
+            statement.setString(1, nameInput.getText());
             statement.setInt(2, Integer.parseInt(priceInput.getText()));
             statement.setInt(3, Integer.parseInt(qteInput.getText()));
             statement.setInt(4, getIdCategorie(categoryCombo.getValue().getName()));
@@ -97,44 +100,75 @@ public class ProductController implements Initializable {
         categoryCombo.setValue(null);
     }
 
-        public void affiche(){
-            ProductRepository prod = new ProductRepository();
-            ObservableList<Product> list;
-            list = prod.getAllproducts();
-            colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-            colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-            colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-            //String namecategory = String.valueOf(categoryCombo.getValue());
-            colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
-            productTable.setItems(list);
+    /*public void affiche() {
+        ProductRepository prod = new ProductRepository();
+        ObservableList<Product> list;
+        list = prod.getAllproducts();
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        //String namecategory = String.valueOf(categoryCombo.getValue());
+        colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        productTable.setItems(list);
+    }*/
+    public void affiche() {
+        ProductRepository prod = new ProductRepository();
+        ObservableList<Product> list;
+        list = prod.getAllproducts();
+        colId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        // Utiliser une cell factory personnalisée pour la colonne colCategory
+        colCategory.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+            public SimpleStringProperty call(TableColumn.CellDataFeatures<Product, String> param) {
+                // Récupérer le produit associé à la ligne
+                Product product = param.getValue();
+                // Récupérer le nom de la catégorie à partir de son ID
+                String categoryName = getCategoryNameById(product.getCategory_id());
+                // Retourner le nom de la catégorie comme valeur à afficher dans la cellule de la colonne colCategory
+                return new SimpleStringProperty(categoryName);
+            }
+        });
+
+        productTable.setItems(list);
     }
+
+    // Méthode pour récupérer le nom de la catégorie à partir de son ID
+    private String getCategoryNameById(int categoryId) {
+        CategoryRepository categoryRepository = new CategoryRepository();
+        Category category = categoryRepository.getCategoryById(categoryId);
+        return category.getName();
+    }
+
 
     @FXML
     void btnDelete(ActionEvent event) {
-        int id=this.productTable.getSelectionModel().getSelectedItem().getId();
+        int id = this.productTable.getSelectionModel().getSelectedItem().getId();
         try {
-            String sql=" DELETE FROM product WHERE id = ?";
-            PreparedStatement statement=connection.prepareStatement(sql);
-            statement.setInt(1,id);
+            String sql = " DELETE FROM product WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, id);
             statement.executeUpdate();
-        }catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         affiche();
 
     }
+
     @FXML
     void charger(MouseEvent event) throws SQLException {
-        Product prod =(Product) productTable.getSelectionModel().getSelectedItem();
-        if (event.getClickCount()==2){
+        Product prod = (Product) productTable.getSelectionModel().getSelectedItem();
+        if (event.getClickCount() == 2) {
             btnadd.setDisable(true);
             btndelete.setDisable(true);
             priceInput.setText(String.valueOf(prod.getPrice()));
             nameInput.setText(prod.getName());
             qteInput.setText(String.valueOf(prod.getQuantity()));
-            CategoryRepository categorieRepository=new CategoryRepository();
+            CategoryRepository categorieRepository = new CategoryRepository();
             int id = categoryCombo.getValue().getId();
             ObservableList<Category> categorie = categorieRepository.getAllCategorie();
             categoryCombo.setItems(categorie);
@@ -171,7 +205,7 @@ public class ProductController implements Initializable {
 
     @FXML
     void searchInput(KeyEvent event) {
-        ProductRepository prod =new ProductRepository();
+        ProductRepository prod = new ProductRepository();
         ObservableList<Product> list = prod.search(searchInput.getText());
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -187,7 +221,7 @@ public class ProductController implements Initializable {
         connection = db.getConnection();
         //connection=new Db().getConnection();
         affiche();
-        CategoryRepository categorieRepository=new CategoryRepository();
+        CategoryRepository categorieRepository = new CategoryRepository();
         ObservableList<Category> categorie = categorieRepository.getAllCategorie();
         categoryCombo.setItems(categorie);
     }

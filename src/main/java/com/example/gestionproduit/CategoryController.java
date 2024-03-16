@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -124,6 +125,7 @@ public class CategoryController implements Initializable {
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         categoryTable.setItems(list);
     }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
