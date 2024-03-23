@@ -96,11 +96,11 @@ public class ProductRepository {
    }
 
 
-    public ObservableList<Product> search(String text) {
+    /*public ObservableList<Product> search(String text) {
         connection = db.getConnection();
         ObservableList<Product> list = FXCollections.observableArrayList();
         try {
-            String sql = "SELECT * FROM product WHERE lower(name) LIKE ? OR quantity = ? OR price = ? OR category_id = ?";
+            String sql = "SELECT * FROM product p , category c  WHERE lower(p.name) LIKE ? OR p.quantity = ? OR p.price = ? OR p.category_id = ? ";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, "%" + text + "%");
             int searchTextAsInt = 0;
@@ -134,6 +134,46 @@ public class ProductRepository {
             }
         }
         return list;
+    }*/
+    public ObservableList<Product> search(String text) {
+        connection = db.getConnection();
+        ObservableList<Product> list = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT * FROM product p JOIN category c ON p.category_id = c.id WHERE lower(p.name) LIKE ? OR p.quantity = ? OR p.price = ? OR lower(c.name) LIKE ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + text + "%");
+            int searchTextAsInt = 0;
+            try {
+                searchTextAsInt = Integer.parseInt(text);
+            } catch (NumberFormatException e) {
+                // Ignore if text cannot be parsed as int
+            }
+            statement.setInt(2, searchTextAsInt);
+            statement.setInt(3, searchTextAsInt);
+            statement.setString(4, "%" + text + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                Product prod = new Product();
+                prod.setId(rs.getInt(1));
+                prod.setName(rs.getString(2));
+                prod.setQuantity(rs.getInt(3));
+                prod.setPrice(rs.getInt(4));
+                prod.setCategory_id(rs.getInt(5));
+                list.add(prod);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
+
 
 }

@@ -160,7 +160,7 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    void charger(MouseEvent event) throws SQLException {
+   /* void charger(MouseEvent event) throws SQLException {
         Product prod = (Product) productTable.getSelectionModel().getSelectedItem();
         if (event.getClickCount() == 2) {
             btnadd.setDisable(true);
@@ -172,6 +172,28 @@ public class ProductController implements Initializable {
             int id = categoryCombo.getValue().getId();
             ObservableList<Category> categorie = categorieRepository.getAllCategorie();
             categoryCombo.setItems(categorie);
+        }
+    }*/
+    void charger(MouseEvent event) throws SQLException {
+        Product prod = (Product) productTable.getSelectionModel().getSelectedItem();
+        if (event.getClickCount() == 2) {
+            btnadd.setDisable(true);
+            btndelete.setDisable(true);
+            priceInput.setText(String.valueOf(prod.getPrice()));
+            nameInput.setText(prod.getName());
+            qteInput.setText(String.valueOf(prod.getQuantity()));
+            // Récupération de la catégorie actuelle du produit
+            CategoryRepository categorieRepository = new CategoryRepository();
+            Category currentCategory = categorieRepository.getCategoryById(prod.getCategory_id());
+
+            // Récupération de toutes les catégories
+            ObservableList<Category> categories = categorieRepository.getAllCategorie();
+
+            // Ajout des catégories à la ComboBox
+            categoryCombo.setItems(categories);
+
+            // Sélection de la catégorie actuelle du produit dans la ComboBox
+            categoryCombo.getSelectionModel().select(currentCategory);
         }
     }
 
@@ -209,9 +231,19 @@ public class ProductController implements Initializable {
         ObservableList<Product> list = prod.search(searchInput.getText());
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
+        //colCategory.setCellValueFactory(new PropertyValueFactory<>("category_id"));
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colQte.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colCategory.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+            public SimpleStringProperty call(TableColumn.CellDataFeatures<Product, String> param) {
+                // Récupérer le produit associé à la ligne
+                Product product = param.getValue();
+                // Récupérer le nom de la catégorie à partir de son ID
+                String categoryName = getCategoryNameById(product.getCategory_id());
+                // Retourner le nom de la catégorie comme valeur à afficher dans la cellule de la colonne colCategory
+                return new SimpleStringProperty(categoryName);
+            }
+        });
         productTable.setItems(list);
     }
 
