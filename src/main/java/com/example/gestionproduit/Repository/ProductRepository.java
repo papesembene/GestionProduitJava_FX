@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepository {
@@ -21,7 +22,7 @@ public class ProductRepository {
     public ProductRepository() {
         this.connection = new Db().getConnection();
     }
-   public List<Product> getProduitsQuantiteInferieure() {
+  /* public List<Product> getProduitsQuantiteInferieure() {
        this.connection = new Db().getConnection();
        ObservableList<Product> list = FXCollections.observableArrayList();
        //list = null;
@@ -42,8 +43,34 @@ public class ProductRepository {
        }
        return list;
 
-   }
-   public ObservableList<Product> getAllproducts(){
+   }*/
+  public List<Product> getProduitsQuantiteInferieure() {
+      this.connection = new Db().getConnection();
+      List<Product> list = new ArrayList<>(); // Utilisation d'une ArrayList au lieu d'ObservableList
+      try {
+          String sql = "SELECT * FROM product WHERE quantity < 5 ";
+          PreparedStatement statement = connection.prepareStatement(sql);
+          ResultSet rs = statement.executeQuery();
+          while (rs.next()) {
+              Product product = new Product();
+              product.setId(rs.getInt(1));
+              product.setName(rs.getString(2));
+              product.setPrice(rs.getInt(3));
+              product.setQuantity(rs.getInt(4));
+              product.setCategory_id(rs.getInt(5));
+              list.add(product); // Ajout du produit à la liste
+          }
+          // Fermeture des ressources JDBC
+          rs.close();
+          statement.close();
+          connection.close();
+      } catch (SQLException e) {
+          throw new RuntimeException(e);
+      }
+      return list;
+  }
+
+    public ObservableList<Product> getAllproducts(){
        connection = db.getConnection();
        ObservableList<Product> list = null;
        try {
